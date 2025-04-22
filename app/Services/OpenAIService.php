@@ -28,7 +28,7 @@ class OpenAIService
         }
 
         // Call OpenAI API
-        $response = Http::withToken(env('OPENAI_API_KEY','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'))->post('https://api.openai.com/v1/chat/completions', [
+        $response = Http::withToken(env('OPENAI_API_KEY',''))->post('https://api.openai.com/v1/chat/completions', [
             'model' => $bot->fine_tuned_model_id ?? $bot->openai_model,
             'messages' => [
                 ['role' => 'system', 'content' => $systemMessage],
