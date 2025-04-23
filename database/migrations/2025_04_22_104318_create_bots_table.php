@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('openai_model')->default('gpt-4');
             $table->string('fine_tuned_model_id')->nullable();
             $table->timestamps();
-
         });
     }
 
