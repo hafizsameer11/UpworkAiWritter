@@ -62,13 +62,14 @@
         .message-box {
             word-wrap: break-word;
             max-width: 75%;
-            padding: 1rem;
+            /* padding: 1rem; */
             border-radius: 0.5rem;
         }
 
         .user-msg {
             background-color: #303030;
             color: white;
+            padding: 1rem;
             align-self: end;
         }
 
@@ -130,7 +131,7 @@
             <textarea id="prompt-input" rows="1" placeholder="Enter your prompt (optional)..."
                 class="form-control text-white border-0 bg-dark" style="overflow:hidden;"></textarea>
             <div class="d-flex gap-2 align-items-end">
-                <button type="submit" class="btn p-0">
+                <button type="submit" class="btn p-2">
                     <img src="{{asset('website/send.svg')}}" alt="send" style="height: 40px;width: 40px;">
                 </button>
             </div>
@@ -157,14 +158,13 @@
                 ? `
             <div class="message-box bot-msg position-relative">
                 <pre class="mb-2" style="white-space: pre-wrap; font-family: inherit;">${text}</pre>
-                
             </div>
             <div class='d-flex align-items-center'>
-                <small class=" mt-1" style='color:white'>${timestamp}</small>
-                <button class="mx-4 btn btn-sm btn-copy" >
+                <button class="mr-2 btn btn-sm btn-copy" >
                     <img src="{{asset('website/copy.svg')}}" width="20" height='20' />
                     </button>
-                </div>
+                    <small class=" mt-1" style='color:white'>${timestamp}</small>
+                    </div>
         `
                 : `
             <div class="message-box ${isUser ? 'user-msg' : 'bot-msg'}">${text}</div>
@@ -228,11 +228,17 @@
 
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            // show user message immediately
+            // Show user message immediately
             if (prompt) {
                 appendMessage(`Prompt: ${prompt}`, time, true);
             }
             appendMessage(text, time, true);
+
+            // Disable the submit button and show loader
+            const submitBtn = chatForm.querySelector("button[type='submit']");
+            const originalBtnHTML = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="spinner-border spinner-border-lg" role="status" aria-hidden="true"></span>`;
 
             // Reset input fields
             messageInput.value = '';
@@ -240,28 +246,33 @@
             autoResize(messageInput);
             autoResize(promptInput);
 
-            // Prepare the object
             const payload = {
                 user_id: {{ auth()->id() }},
                 bot_id: {{ $bot->id }},
                 job_post: text,
-                ...(prompt && { custom_prompt: prompt }) // only include if exists
+                ...(prompt && { custom_prompt: prompt })
             };
+
             $.ajax({
                 url: '/api/proposals/create',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(payload),
                 success: function (data) {
-                    console.log(data)
                     appendMessage(data.proposal.ai_response || 'AI has no response.', new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), false);
                 },
                 error: function (err) {
                     console.error(err);
                     appendMessage('An error occurred. Please try again later.', new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), false);
+                },
+                complete: function () {
+                    // Re-enable and restore the button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHTML;
                 }
             });
         });
+
     </script>
 </body>
 
