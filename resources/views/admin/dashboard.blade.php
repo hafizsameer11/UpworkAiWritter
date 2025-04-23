@@ -1,5 +1,6 @@
 @extends('admin.layout')
 @section('adminMain')
+<h1>Dashboard</h1>
     {{-- <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">

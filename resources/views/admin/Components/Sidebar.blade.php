@@ -33,6 +33,12 @@
                     <span>Bots</span>
                 </a>
             </li>
+            <li>
+                <a href="{{route('projects.index')}}">
+                    <i class="bi bi-columns-gap menu-icon"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
             {{-- <li>
                 <a href="javascript: void(0);"><i class="ti-control-record"></i>Niches <span
                         class="menu-arrow left-has-menu"><i class="mdi mdi-chevron-right"></i></span></a>

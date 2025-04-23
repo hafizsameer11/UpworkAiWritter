@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\admin\BotsController;
 use App\Http\Controllers\admin\NichesController;
+use App\Http\Controllers\admin\ProjectsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthViewController;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,15 +31,17 @@ Route::post('/forgot-password', [AuthController::class, 'sendResetCode']);
 Route::post('/verify-reset-code', [AuthController::class, 'verifyResetCode']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
-
-Route::get('/chatbots',[WebsiteController::Class,'bots'])->name('webiste.bots');
-
-
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-    Route::resource('niches',NichesController::class);
-    Route::resource('bots',BotsController::class);
+Route::middleware(AuthMiddleware::class)->group(function () {
+    Route::get('/chatbots', [WebsiteController::class, 'bots'])->name('webiste.bots');
+    Route::get('/CreateProposal/{id}', [WebsiteController::class, 'chatCan'])->name('webiste.chatCan');
+    Route::get('/logout', [WebsiteController::class, "logout"])->name('auth.logout');
 });
 
+Route::middleware( AdminMiddleware::class)->group(function () {
+    Route::get('admin', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+    Route::resource('admin/niches', NichesController::class);
+    Route::resource('admin/bots', BotsController::class);
+    Route::resource('admin/projects', ProjectsController::class);
+});

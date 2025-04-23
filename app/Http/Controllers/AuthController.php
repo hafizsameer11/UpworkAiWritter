@@ -41,7 +41,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
         Auth::login($user);
-        return response()->json(['message' => 'Login successful']);
+        return response()->json(['message' => 'Login successful','user'=>$user]);
     }
 
     public function sendResetCode(Request $request)
@@ -51,7 +51,7 @@ class AuthController extends Controller
         $user->remember_token = rand(100000, 999999);
         $user->save();
 
-        Mail::to($user->email)->send(new SendCode($user->verification_code));
+        Mail::to($user->email)->send(new SendCode($user->remember_token));
 
         return response()->json(['message' => 'Reset code sent to your email.']);
     }
@@ -87,7 +87,7 @@ class AuthController extends Controller
         }
 
         $user->password = Hash::make($request->password);
-        $user->verification_code = null;
+        $user->remember_token = null;
         $user->save();
 
         return response()->json(['message' => 'Password reset successful']);

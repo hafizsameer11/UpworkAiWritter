@@ -6,9 +6,11 @@
             background-color: #212121;
             color: #fff;
         }
+
         #loginForm {
             background-color: #171717;
         }
+
         .form-control {
             background-color: #1e1e1e;
             color: #fff;
@@ -52,7 +54,8 @@
                     <a href="{{ route('auth.forgot') }}" class="text-light">Forgot Password?</a>
                 </div>
 
-                <button class="btn btn-success btn-block" id="loginBtn">Login</button>
+                <button class="btn btn-primary btn-block" id="loginBtn">Login</button>
+                <a href="{{route('auth.signup')}}" class="btn btn-dark btn-block" id="loginBtn">Sign up</a>
             </form>
         </div>
     </div>
@@ -74,8 +77,13 @@
                     password: $('#loginPassword').val()
                 },
                 success: function (res) {
+                    console.log(res);
                     Swal.fire('Welcome!', 'You are now logged in.', 'success').then(() => {
-                        window.location.href = '{{route('webiste.bots')}}';
+                        if (res.user.role == 'admin') {
+                            window.location.href = '{{route('niches.index')}}';
+                        } else {
+                            window.location.href = '{{route('webiste.bots')}}';
+                        }
                     });
                 },
                 error: function (xhr) {

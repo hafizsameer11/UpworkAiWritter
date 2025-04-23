@@ -14,7 +14,7 @@
 
         .card-container {
             min-height: 100vh;
-            display:'flex';
+            display: 'flex';
             align-items: 'center';
             justify-content: 'center';
             flex-direction: 'column';
@@ -62,34 +62,38 @@
         <h1 class="heading mb-4">Select Your Chat</h1>
         <div class="row w-100 justify-content-center" id="card_container">
             @foreach ($bots as $bot)
-            <div class="col-md-4 mb-4">
-                <div class="card text-bg-dark shadow w-100 h-100">
-                    <div class="tools">
-                        <div class="circle">
-                            <span class="red box"></span>
+                <div class="col-md-4 mb-4">
+                    <div class="card text-bg-dark shadow w-100 h-100">
+                        <div class="tools">
+                            <div class="circle">
+                                <span class="red box"></span>
+                            </div>
+                            <div class="circle">
+                                <span class="yellow box"></span>
+                            </div>
+                            <div class="circle">
+                                <span class="green box"></span>
+                            </div>
                         </div>
-                        <div class="circle">
-                            <span class="yellow box"></span>
+                        <div class="card-header">
+                            <img src="{{asset('storage/' . $bot->image)}}" alt="{{$bot->name}}"
+                                style="width: 100%;height:200px;">
                         </div>
-                        <div class="circle">
-                            <span class="green box"></span>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="mb-0">{{$bot->name}}</h6>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-header">
-                        <img src="{{asset('storage/'.$bot->image)}}" alt="{{$bot->name}}" style="width: 100%;height:200px;"> 
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <h6 class="mb-0">{{$bot->name}}</h6>
-                        </div>
-                    </div>
 
-                    <div class="card-footer ">
-                        <div class='py-1 d-flex justify-content-end'><button class="btn btn-light">Open Chat</button>
+                        <div class="card-footer ">
+                            <div class='py-1 d-flex justify-content-end'>
+                                <a href="{{url('/CreateProposal/' . $bot->id . '')}}" class="btn btn-light">
+                                    Open Chat
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>

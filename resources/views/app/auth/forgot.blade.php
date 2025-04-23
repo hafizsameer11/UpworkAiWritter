@@ -1,16 +1,44 @@
 @extends('app.layout')
 
 @section('content')
-    <div class="container mt-5">
-        <h2>Forgot Password</h2>
-        <form id="forgotForm">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" id="forgotEmail" class="form-control" name="email">
-                <small class="text-danger" id="error-email"></small>
-            </div>
-            <button class="btn btn-warning btn-block" id="forgotBtn">Send Code</button>
-        </form>
+    <style>
+        body {
+            background-color: #212121;
+            color: #ffffff;
+        }
+
+        .center-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+
+        .form-container {
+            background-color: #171717;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            color: #ccc;
+        }
+    </style>
+
+    <div class="center-wrapper">
+        <div class="form-container">
+            <h2 class="text-center mb-4">Forgot Password</h2>
+            <form id="forgotForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="forgotEmail" class="form-control" name="email">
+                    <small class="text-danger" id="error-email"></small>
+                </div>
+                <button type="submit" class="btn btn-warning w-100 mt-3" id="forgotBtn">Send Code</button>
+            </form>
+        </div>
     </div>
 @endsection
 
@@ -27,6 +55,8 @@
                 data: { email: $('#forgotEmail').val() },
                 success: function (res) {
                     Swal.fire('Email Sent', 'Check your inbox for the reset code.', 'success');
+                    localStorage.setItem('reset_email', $('#forgotEmail').val());
+                    window.location.href = "{{ route('auth.verify') }}";
                     $('#forgotForm')[0].reset();
                 },
                 error: function (xhr) {

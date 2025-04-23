@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthViewController extends Controller
 {
@@ -13,6 +14,9 @@ class AuthViewController extends Controller
 
     public function showLogin()
     {
+        if (Auth::check()) {
+            return redirect()->route('webiste.bots');
+        }
         return view('app.auth.login');
     }
 

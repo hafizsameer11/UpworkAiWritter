@@ -22,12 +22,16 @@ class ProjectController extends Controller
     // POST /projects/create
     public function create(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'niche_id' => 'required|exists:niches,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'project_url' => 'required|url',
+            'project_url' => 'required|string',
         ]);
+
+        if (!$validatedData) {
+            return response()->json(['message' => 'Validation failed', 'errors' => $request->errors()], 422);
+        }
 
         $project = Project::create($request->only([
             'niche_id',
