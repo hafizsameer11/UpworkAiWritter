@@ -20,7 +20,7 @@ class ProposalController extends Controller
         ]);
 
         $bot = Bot::with('niche')->findOrFail($validated['bot_id']);
-        $niche = $bot->niche;
+        $niche = $bot->niche ;
         $projects = Project::where('niche_id', $niche->id)->get();
 
         $openai = new OpenAIService();
@@ -56,9 +56,10 @@ class ProposalController extends Controller
         return Proposal::with('bot', 'niche')->latest()->get();
     }
 
-    public function get($id)
+    public function get($id,$userId)
     {
-        return Proposal::with('bot', 'niche', 'user')->findOrFail($id);
+        return Proposal::with('bot', 'niche', 'user')->
+        where('bot_id', $id)
+        ->where('user_id', $userId)->get();
     }
-    //
 }

@@ -39,4 +39,4 @@ Route::post('/projects/update/{id}', [ProjectController::class, 'update']);
 Route::delete('/projects/delete/{id}', [ProjectController::class, 'delete']);
 Route::post('/proposals/create', [ProposalController::class, 'create']);
 Route::get('/proposals', [ProposalController::class, 'all']);
-Route::get('/proposals/{id}', [ProposalController::class, 'get']);
+Route::get('/proposals/{id}/{userId}', [ProposalController::class, 'get']);
