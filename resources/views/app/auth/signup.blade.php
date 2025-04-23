@@ -54,7 +54,7 @@
                     <small class="text-danger" id="error-password"></small>
                 </div>
 
-                <button class="btn btn-dark btn-block" id="signupBtn">Register</button>
+                <button class="btn btn-primary btn-block" id="signupBtn">Register</button>
             </form>
         </div>
     </div>

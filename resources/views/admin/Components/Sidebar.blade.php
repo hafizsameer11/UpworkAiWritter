@@ -15,27 +15,27 @@
     <div class="menu-content h-100" data-simplebar>
         <ul class="metismenu left-sidenav-menu">
             <li class="menu-label mt-0">Main</li>
-            <li>
+            <li class="d-flex align-items-center">
                 <a href="{{route('admin.dashboard')}}">
-                    <i class="bi bi-columns-gap menu-icon"></i>
+                    <i class="bi bi-columns-gap "></i>
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li>
+            <li class="d-flex align-items-center">
                 <a href="{{route('niches.index')}}">
-                    <i class="bi bi-columns-gap menu-icon"></i>
+                    <i class="bi bi-tag-fill"></i>
                     <span>Niches</span>
                 </a>
             </li>
-            <li>
+            <li class="d-flex align-items-center">
                 <a href="{{route('bots.index')}}">
-                    <i class="bi bi-columns-gap menu-icon"></i>
+                    <i class="bi bi-robot"></i>
                     <span>Bots</span>
                 </a>
             </li>
-            <li>
+            <li class="d-flex align-items-center">
                 <a href="{{route('projects.index')}}">
-                    <i class="bi bi-columns-gap menu-icon"></i>
+                    <i class="bi bi-cast"></i>
                     <span>Projects</span>
                 </a>
             </li>

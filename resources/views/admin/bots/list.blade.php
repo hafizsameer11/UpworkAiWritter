@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body ">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h1 class="card-title">Niche List</h1>
+                        <h1 class="card-title">Bot List</h1>
                         <div class="d-flex align-items-center gap-2">
                             <a href="{{route('bots.create')}}" class="btn btn-primary mr-2">
                                 Add Bot
@@ -38,10 +38,10 @@
                                 @foreach ($bots as $bot)
                                     <tr>
                                         <td>
-                                            <img src="{{ asset('storage/' . $bot->image) }}" alt="{{$bot->name}}" style="width: 50px;height: 50px;border-radius: 100%;">
+                                            <img src="{{ asset('storage/' . $bot->image) }}" alt="{{$bot->name}}" style="width: 50px;height: 50px;">
                                         </td>
                                         <td>{{$bot->name}}</td>
-                                        <td>{{$bot->system_prompt}}</td>
+                                        <td>{{ Str::limit($bot->system_prompt, 25, '...') }}</td>
                                         <td>{{$bot->openai_model}}</td>
                                         <td>{{($bot->fine_tuned_model_id) ? $bot->fine_tuned_model_id : 'N/A'}}</td>
                                         <td>{{$bot->niche->name}}</td>

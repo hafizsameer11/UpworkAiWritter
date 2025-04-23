@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body ">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h1 class="card-title">Niche List</h1>
+                        <h1 class="card-title">Project List</h1>
                         <div class="d-flex align-items-center gap-2">
                             <a href="{{route('projects.create')}}" class="btn btn-primary mr-2">
                                 Add Project
@@ -37,7 +37,7 @@
                                     <tr>
                                         <td>{{$project->title }}</td>
                                         <td>{{$project->niche->name}}</td>
-                                        <td>{{$project->description}}</td>
+                                        <td>{{Str::limit($project->description, 25, '...')}}</td>
                                         <td>{{$project->project_url}}</td>
                                         <td>
                                             <div class="d-flex align-items-center gap-4">
